@@ -12,17 +12,10 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository code -- master
+      - name: Checkout pull request HEAD
         uses: actions/checkout@v2
         with:
-          ref: master
-          path: master
-      - name: Checkout repository code -- HEAD
-        uses: actions/checkout@v2
-        with:
-          ref: HEAD
-          path: HEAD
-      - name: Show git log -- master
-        run: cd ~/master && git log
-      - name: Show git log -- HEAD
-        run: cd ~/HEAD && git log
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Show git log
+        run: git log
