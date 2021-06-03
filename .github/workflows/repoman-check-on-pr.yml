@@ -15,7 +15,7 @@ jobs:
       - name: Checkout pull request HEAD
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: 100
           ref: ${{ github.head_ref }}
       - name: Show git diff from master branch
-        run: git diff --raw ${{ github.base_ref }}
+        run: git diff --raw ${{ github.ref }}
