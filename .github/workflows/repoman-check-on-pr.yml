@@ -17,5 +17,5 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
-      - name: Show git log
-        run: git log
+      - name: Show git diff from master branch
+        run: git diff --raw master
