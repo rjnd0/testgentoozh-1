@@ -1,0 +1,24 @@
+name: Generate the dependencies table
+on:
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - '.github/**'
+      - 'metadata/**'
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          path: master
+      - name: Fetch gentoo-zh repo
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ GITHUB_REF }}
+          path: pr
