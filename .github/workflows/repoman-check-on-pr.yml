@@ -1,4 +1,4 @@
-name: Generate the dependencies table
+name: Check ebuilds under current pull request
 on:
   pull_request:
     branches:
@@ -23,3 +23,5 @@ jobs:
         with:
           ref: ${{ GITHUB_REF }}
           path: pr
+      - name: Show
+        run: tree .
