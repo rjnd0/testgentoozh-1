@@ -16,6 +16,5 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: master
-          path: master
       - name: Show
         run: git log
