@@ -1,4 +1,4 @@
-name: Check ebuilds under current pull request
+name: Use repoman to check this pr
 on:
   pull_request:
     branches:
@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  generate:
+  check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository code
