@@ -26,8 +26,8 @@ jobs:
           git diff --raw origin/master
           python --version
           pip install portage
-          portage --version
-          which portage
+          emerge --version
+          which emerge
           which repoman
           ls /etc/portage
           ls /var/db/repos
