@@ -5,7 +5,7 @@ EAPI=7
 
 RESTRICT="mirror"
 
-DESCRIPTION="A systemd web based user interface for Linux server"
+DESCRIPTION="A systemd web based user interface for Linux serverdjksaj"
 HOMEPAGE="https://cockpit-project.org/"
 SRC_URI="https://github.com/cockpit-project/cockpit/releases/download/${PV}/cockpit-${PV}.tar.xz
 https://github.com/cockpit-project/cockpit/releases/download/${PV}/cockpit-cache-${PV}.tar.xz
