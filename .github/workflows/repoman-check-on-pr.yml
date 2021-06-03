@@ -25,3 +25,9 @@ jobs:
           git show-ref
           git diff --raw origin/master
           python --version
+          pip install portage
+          portage --version
+          which portage
+          which repoman
+          ls /etc/portage
+          ls /var/db/repos
