@@ -15,12 +15,10 @@ jobs:
       - name: Checkout the base ref
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
           ref: ${{ github.base_ref }}
       - name: Checkout the head ref
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
           ref: ${{ github.head_ref }}
       - name: Show
         run: |
