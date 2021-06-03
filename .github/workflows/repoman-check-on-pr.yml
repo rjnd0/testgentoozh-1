@@ -24,3 +24,4 @@ jobs:
         run: |
           git show-ref
           git diff --raw origin/master
+          python --version
