@@ -22,3 +22,4 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: Show
         run: git show-ref
+        run: git diff --raw master
