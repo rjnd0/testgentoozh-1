@@ -12,9 +12,17 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository code
+      - name: Checkout repository code -- master
         uses: actions/checkout@v2
         with:
           ref: master
-      - name: Show
-        run: git log
+          path: master
+      - name: Checkout repository code -- HEAD
+        uses: actions/checkout@v2
+        with:
+          ref: HEAD
+          path: HEAD
+      - name: Show git log -- master
+        run: cd ~/master && git log
+      - name: Show git log -- HEAD
+        run: cd ~/HEAD && git log
