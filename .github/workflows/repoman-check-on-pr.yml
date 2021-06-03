@@ -17,5 +17,5 @@ jobs:
         with:
           fetch-depth: 100
           ref: ${{ github.head_ref }}
-      - name: Show git diff from master branch
-        run: git diff --raw origin/master
+      - name: Show
+        run: git show-ref
