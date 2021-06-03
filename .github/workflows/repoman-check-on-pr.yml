@@ -1,4 +1,4 @@
-name: Use repoman to check this pr
+name: Use repoman to check this
 on:
   pull_request:
     branches:
@@ -7,7 +7,6 @@ on:
       - '.github/**'
       - 'metadata/**'
     types: [opened, edited, reopened, synchronize]
-  workflow_dispatch:
 
 jobs:
   check:
@@ -18,10 +17,5 @@ jobs:
         with:
           ref: master
           path: master
-      - name: Fetch gentoo-zh repo
-        uses: actions/checkout@v2
-        with:
-          ref: ${GITHUB_REF}
-          path: pr
       - name: Show
-        run: tree .
+        run: git log
