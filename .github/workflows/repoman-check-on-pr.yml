@@ -167,4 +167,4 @@ jobs:
             ```
             ${{ steps.check.outputs.report }}
             ```
-            [details](https://github.com/${{ github.repository }}/pulls/${{ github.event.number }}/checks?sha=${{ github.event.pull_request.head.sha }})
+            [:mag: the details](https://github.com/${{ github.repository }}/pull/${{ github.event.number }}/checks?sha=${{ github.event.pull_request.head.sha }})

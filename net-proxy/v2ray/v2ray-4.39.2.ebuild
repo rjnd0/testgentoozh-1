@@ -1,11 +1,10 @@
 # Copyright 2021 Gentoo Authors
-# Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
 inherit systemd go-module
 
-DESCRIPTION="A platform for building proxies to bypass nrestrictions."
+DESCRIPTION="A platform for building proxies to bypassestrictions."
 HOMEPAGE="https://github.com/v2fly/v2ray-core"
 
 # sed -re 's/^(\S*) (\S*) (\S*)/"\1 \2"/g' go.sum
