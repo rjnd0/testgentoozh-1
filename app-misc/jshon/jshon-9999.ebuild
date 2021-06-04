@@ -6,6 +6,7 @@ inherit git-r3
 
 DESCRIPTION="Jshon is a JSON parser designed for maximum convenience within the shellsjdklasdaaajdksal
 dd
+d
 "
 HOMEPAGE="http://kmkeen.com/jshon/"
 SRC_URI=""

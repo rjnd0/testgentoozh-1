@@ -15,7 +15,25 @@ else
 fi
 
 SLOT="2"
-DESCRIPTION="Nixnote - A clone of Evernote for Linux"
+DESCRIPTION="Nixnote - A clone of Evernote for Linux
+djska
+djska
+djska
+djska
+djska
+djska
+djska
+djska
+djska
+djska
+djska
+djska
+ddjskadjskadjskadjskadjskadjskadjskadjskadjskadjskadjskadjskadjskadjskadjskajska
+djska
+djska
+djska
+djska
+"
 HOMEPAGE="http://sourceforge.net/projects/nevernote/"
 
 LICENSE="GPL-3"
