@@ -34,7 +34,7 @@ jobs:
         run: |
           set -xe
           printf "[build_ext]\nportage-ext-modules=true" >>setup.cfg
-          sudo ./setup.py install --prefix=/usr
+          sudo ./setup.py install
           sudo useradd portage -d /var/tmp/portage -s /bin/false
           sudo ln -s /var/db/repos/gentoo/profiles/default/linux/amd64/17.1 /etc/portage/make.profile
           sudo printf "[gentoo-zh]\nlocation = /var/db/repos/gentoo-zh" >>/etc/portage/repos.conf
@@ -42,8 +42,8 @@ jobs:
         run: |
           set -xe
           cd repoman
-          sudo ./setup.py install --prefix=/usr
-          #sudo mv /usr/local/share/repoman /usr/share/ || true
+          sudo ./setup.py install
+          sudo mv /usr/local/share/repoman /usr/share/ || true
       - name: Checkout the base ref of ::gentoo-zh
         uses: actions/checkout@v2
         with:
@@ -64,11 +64,26 @@ jobs:
           sudo mv ${{ github.workspace }}/gentoo{,-zh} /var/db/repos/
           cd /var/db/repos/gentoo-zh
       - name: Check
-        env:
-          PYTHONPATH: /usr/lib/python3.9/site-packages
         run: |
           set -xe
-          diff_files=$(git diff --raw origin/master | awk -F" " '{printf $NF "\n"}')
+          git diff --raw origin/master
+          diff_files=$(git diff --raw origin/master | awk -F'[[:space:]]' '{printf $NF "\n"}')
           cates=$(cat /var/db/repos/gentoo{,-zh}/profiles/categories | sort -du)
-          echo $diff_files $cates
-          repoman --version
+          declare -a check_pkgs
+          for file in ${diff_files}; do
+            c=${file%%/*}
+            for cate in ${cates}; do
+              if [[ ${c} == ${cate} ]]; then
+                n=${file#*/}
+                n=${file%%/*}
+                check_pkgs+=( ${c}/${n} )
+              fi
+            done
+          done
+          ret=0
+          for pkg in ${check_pkgs[@]}; do
+            pushd ${pkg}
+            repoman full || ret=1
+            popd
+          done
+          [[ ${ret} == 0 ]]
