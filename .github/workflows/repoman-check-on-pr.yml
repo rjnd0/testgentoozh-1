@@ -53,7 +53,9 @@ jobs:
           cd repoman
           sudo ./setup.py install --prefix=/usr
       - name: Test
+        env:
+          repo_path: ${{ GITHUB_WORKSPACE }}
         run: |
-          mv ${{ GITHUB_WORKSPACE }}/* /var/db/repos/
+          mv ${repo_path}/* /var/db/repos/
           cd /var/db/repos/gentoo-zh/app-office/wps-office
           repoman scan
