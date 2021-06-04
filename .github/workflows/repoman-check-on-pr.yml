@@ -12,6 +12,11 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
+      - name: Prepare environment
+        run: |
+          set -xe
+          mkdir -p /var/db/repos/gentoo{,-zh}
+          mkdir -p /var/tmp/portage
       - name: Checkout the base ref
         uses: actions/checkout@v2
         with:
@@ -38,7 +43,6 @@ jobs:
           set -xe
           printf "[build_ext]\nportage-ext-modules=true" >>setup.cfg
           ./setup.py install --prefix=/usr
-          mkdir -p /var/tmp/portage
           echo 'portage:x:250:250:portage:/var/tmp/portage:/bin/false' >>/etc/passwd
           echo 'portage::250:portage' >>/etc/group
           ln -s /var/db/repos/gentoo/profiles/default/linux/amd64/17.1 /etc/portage/make.profile
