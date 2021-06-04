@@ -6,10 +6,10 @@ inherit unpacker xdg
 
 MY_PV="$(ver_cut 4)"
 
-DESCRIPTION="WPS Office is an office productivity suite, Here is the Chinese version"
+DESCRIPTION=""
 HOMEPAGE="http://www.wps.cn/product/wpslinux/ http://wps-community.org/"
 
-KEYWORDS="amd64"
+KEYWORDS=""
 
 SRC_URI="https://wdl1.cache.wps.cn/wps/download/ep/Linux2019/${MY_PV}/${PN}_${PV}_amd64.deb"
 
