@@ -1,4 +1,4 @@
-name: Repoman
+name: repoman
 on:
   pull_request:
     branches:
