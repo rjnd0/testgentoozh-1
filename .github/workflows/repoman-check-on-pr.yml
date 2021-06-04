@@ -12,8 +12,9 @@ jobs:
   check-changed-ebuilds:
     name: check changed ebuilds
     runs-on: ubuntu-20.04
-    permissions: read-all
-      issues: write
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Setup python3.9
         uses: actions/setup-python@v2
