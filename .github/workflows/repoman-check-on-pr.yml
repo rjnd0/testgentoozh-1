@@ -15,8 +15,8 @@ jobs:
       - name: Prepare environment
         run: |
           set -xe
-          mkdir -p /var/db/repos/gentoo{,-zh}
-          mkdir -p /var/tmp/portage
+          sudo mkdir -p /var/db/repos/gentoo{,-zh}
+          sudo mkdir -p /var/tmp/portage
       - name: Checkout the base ref
         uses: actions/checkout@v2
         with:
