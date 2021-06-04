@@ -68,7 +68,6 @@ jobs:
           path: gentoo
       - name: Check
         id: check
-        continue-on-error: true
         shell: bash
         env:
           THEBASEREF: ${{ github.event.pull_request.base.sha }}
@@ -113,7 +112,7 @@ jobs:
             exit 1
           fi
       - name: Post a comment
-        if: ${{ steps.check.outputs.report }}
+        if: failed()
         uses: peter-evans/create-or-update-comment@v1
         with:
           issue-number: ${{ github.event.number }}
