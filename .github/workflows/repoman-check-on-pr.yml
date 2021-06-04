@@ -73,7 +73,7 @@ jobs:
             for cate in ${cates}; do
               if [[ ${c} == ${cate} ]]; then
                 n=${file#*/}
-                n=${file%%/*}
+                n=${n%%/*}
                 check_pkgs+=( ${c}/${n} )
               fi
             done
