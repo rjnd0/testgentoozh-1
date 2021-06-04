@@ -91,7 +91,6 @@ jobs:
             done
           done
           check_pkgs=( $(echo "${check_pkgs[@]}" | tr ' ' '\n' | sort -du | tr '\n' ' ') )
-          repoman --version >/tmp/report.txt
           echo >/tmp/report.txt
           ret=0
           for pkg in ${check_pkgs[@]}; do
@@ -105,11 +104,18 @@ jobs:
             echo >>/tmp/report.txt
             popd
           done
+          cd /var/db/repos/gentoo
+          v_repoman=$(repoman --version)
+          v_python=$(python -V)
+          commit_gentoo=$(git rev-list -n1 master)
           report="$(cat /tmp/report.txt)"
           report="${report//'%'/'%25'}"
           report="${report//$'\n'/'%0A'}"
           report="${report//$'\r'/'%0D'}"
           echo "::set-output name=report::${report}"
+          echo "::set-output name=vpython::${v_python}"
+          echo "::set-output name=vrepoman::${v_repoman}"
+          echo "::set-output name=gentoocommit::${commit_gentoo}"
           if [[ ${ret} == 0 ]]; then
             echo "::set-output name=state::passed"
             if ! $(grep -v 'No QA issues found' /tmp/report.txt); then
@@ -128,8 +134,11 @@ jobs:
         with:
           issue-number: ${{ github.event.number }}
           body: |
+            %23%23%23 :${{steps.check.outputs.stateicon}}: repoman checks ${{steps.check.outputs.state}}
 
-            :${{steps.check.outputs.stateicon}}: **repoman checks ${{steps.check.outputs.state}}**
+            _python version: ${{ steps.check.outputs.vpython }}_ 
+            _repoman version: ${{ steps.check.outputs.vrepoman }}_ 
+            _::gentoo_ repo version: https://github.com/gentoo-mirror/gentoo/tree/${{ steps.check.outputs.gentoocommit }}
 
             ```
             ${{ steps.check.outputs.report }}
