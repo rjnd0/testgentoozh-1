@@ -13,6 +13,7 @@ jobs:
     name: check changed ebuilds
     runs-on: ubuntu-20.04
     permissions: read-all
+      issues: write
     steps:
       - name: Setup python3.9
         uses: actions/setup-python@v2
@@ -165,4 +166,4 @@ jobs:
             ```
             ${{ steps.check.outputs.report }}
             ```
-            [details](https://github.com/bekcpear/testgentoozh/pulls/${{ github.event.number }}/checks?check_run_id=${{ github.job_id }})
+            [details](https://github.com/${{ github.repository }}/pulls/${{ github.event.number }}/checks?sha=${{ github.event.pull_request.head.sha }})
