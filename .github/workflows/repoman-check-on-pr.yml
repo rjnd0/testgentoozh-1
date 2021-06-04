@@ -106,7 +106,10 @@ jobs:
           done
           if [[ ${ret} != 0 ]]; then
             report="$(cat /tmp/report.txt)"
-            echo ::set-output name=report::"${report}"
+            report="${report//'%'/'%25'}"
+            report="${report//$'\n'/'%0A'}"
+            report="${report//$'\r'/'%0D'}"
+            echo "::set-output name=report::${report}"
             exit 1
           fi
       - name: Post a comment
