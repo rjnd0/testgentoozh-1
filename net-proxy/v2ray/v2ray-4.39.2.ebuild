@@ -5,7 +5,7 @@ EAPI=7
 
 inherit systemd go-module
 
-DESCRIPTION="A platform for building proxies to bypass network restrictions."
+DESCRIPTION="A platform for building proxies to bypass net restrictions."
 HOMEPAGE="https://github.com/v2fly/v2ray-core"
 
 # sed -re 's/^(\S*) (\S*) (\S*)/"\1 \2"/g' go.sum
