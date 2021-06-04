@@ -91,7 +91,7 @@ jobs:
             done
           done
           check_pkgs=( $(echo "${check_pkgs[@]}" | tr ' ' '\n' | sort -du | tr '\n' ' ') )
-          echo >/tmp/report.txt
+          echo -n >/tmp/report.txt
           ret=0
           for pkg in ${check_pkgs[@]}; do
             echo
@@ -99,14 +99,14 @@ jobs:
             echo ">>> Checking ${pkg} ..."
             echo "================================="
             pushd ${pkg}
-            echo "Package: ${pkg}" >>/tmp/report.txt
+            echo "=== Package: ${pkg} ===" >>/tmp/report.txt
             repoman full -q > >(tee -ai /tmp/report.txt) || ret=1
             echo >>/tmp/report.txt
             popd
           done
-          cd /var/db/repos/gentoo
-          v_repoman=$(repoman --version)
-          v_python=$(python -V)
+          cd /var/db/repos/gentoo || true
+          v_repoman=$(repoman --version) || true
+          v_python=$(python -V) || true
           commit_gentoo=$(git rev-list -n1 HEAD) || true
           report="$(cat /tmp/report.txt)"
           report="${report//'%'/'%25'}"
@@ -134,11 +134,11 @@ jobs:
         with:
           issue-number: ${{ github.event.number }}
           body: |
-            %23%23%23 :${{steps.check.outputs.stateicon}}: repoman checks ${{steps.check.outputs.state}}
+            ### :${{steps.check.outputs.stateicon}}: repoman checks ${{steps.check.outputs.state}}
 
-            _python version: ${{ steps.check.outputs.vpython }}_ 
-            _repoman version: ${{ steps.check.outputs.vrepoman }}_ 
-            _::gentoo_ repo version: https://github.com/gentoo-mirror/gentoo/tree/${{ steps.check.outputs.gentoocommit }}
+            _${{ steps.check.outputs.vpython }}_ 
+            _${{ steps.check.outputs.vrepoman }}_ 
+            _::gentoo_ repo version: [gentoo-mirror/gentoo](https://github.com/gentoo-mirror/gentoo/tree/${{ steps.check.outputs.gentoocommit }})
 
             ```
             ${{ steps.check.outputs.report }}
