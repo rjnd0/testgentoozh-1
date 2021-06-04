@@ -1,4 +1,4 @@
-name: Use repoman to check this
+name: Use repoman to check changed ebuilds
 on:
   pull_request:
     branches:
@@ -12,6 +12,10 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup python3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
       - name: Prepare environment
         run: |
           set -xe
@@ -55,8 +59,13 @@ jobs:
         with:
           repository: gentoo-mirror/gentoo
           path: gentoo
-      - name: Test
+      - name: Enter ::gentoo-zh
         run: |
           sudo mv ${{ github.workspace }}/gentoo{,-zh} /var/db/repos/
-          cd /var/db/repos/gentoo-zh/app-office/wps-office
-          repoman scan
+          cd /var/db/repos/gentoo-zh
+      - name: Check
+        run: |
+          diff_files=$(git diff --raw master | awk -F" " '{printf $NF "\n"}')
+          cates=$(cat /var/db/repos/gentoo{,-zh}/profiles/categories | sort -du)
+          echo $diff_files $cates
+          repoman --version
