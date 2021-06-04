@@ -5,7 +5,6 @@ EAPI=7
 inherit git-r3
 
 DESCRIPTION="Jshon is a JSON parser designed for maximum convenience within the shellsjdklasdaaajdksal
-ajdksla
 dd
 "
 HOMEPAGE="http://kmkeen.com/jshon/"
