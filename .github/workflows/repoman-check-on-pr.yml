@@ -162,3 +162,4 @@ jobs:
             ```
             ${{ steps.check.outputs.report }}
             ```
+            [details](https://github.com/EnricoMi/publish-unit-test-result-action/runs/${{ github.run_id }})
