@@ -115,10 +115,11 @@ jobs:
           echo "::set-output name=vrepoman::${v_repoman:-<None>}"
           echo "::set-output name=gentoocommit::${commit_gentoo:-<None>}"
           if [[ ${ret} == 0 ]]; then
-            echo "::set-output name=state::passed"
             if ! grep -v 'No QA issues found' /tmp/report.txt &>/dev/null; then
+              echo "::set-output name=state::passed"
               echo "::set-output name=stateicon::heavy_check_mark"
             else
+              echo "::set-output name=state::passed with non-fatal QA errors"
               echo "::set-output name=stateicon::white_circle"
             fi
           else
