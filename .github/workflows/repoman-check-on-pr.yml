@@ -10,7 +10,7 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Setup python3.9
         uses: actions/setup-python@v2
@@ -34,7 +34,7 @@ jobs:
         run: |
           set -xe
           printf "[build_ext]\nportage-ext-modules=true" >>setup.cfg
-          sudo ./setup.py install
+          sudo ./setup.py install --prefix=/usr
           sudo useradd portage -d /var/tmp/portage -s /bin/false
           sudo ln -s /var/db/repos/gentoo/profiles/default/linux/amd64/17.1 /etc/portage/make.profile
           sudo printf "[gentoo-zh]\nlocation = /var/db/repos/gentoo-zh" >>/etc/portage/repos.conf
@@ -42,8 +42,8 @@ jobs:
         run: |
           set -xe
           cd repoman
-          sudo ./setup.py install
-          sudo mv /usr/local/share/repoman /usr/share/ || true
+          sudo ./setup.py install --prefix=/usr
+          #sudo mv /usr/local/share/repoman /usr/share/ || true
       - name: Checkout the base ref of ::gentoo-zh
         uses: actions/checkout@v2
         with:
@@ -64,8 +64,11 @@ jobs:
           sudo mv ${{ github.workspace }}/gentoo{,-zh} /var/db/repos/
           cd /var/db/repos/gentoo-zh
       - name: Check
+        env:
+          PYTHONPATH: /usr/lib/python3.9/site-packages
         run: |
-          diff_files=$(git diff --raw master | awk -F" " '{printf $NF "\n"}')
+          set -xe
+          diff_files=$(git diff --raw origin/master | awk -F" " '{printf $NF "\n"}')
           cates=$(cat /var/db/repos/gentoo{,-zh}/profiles/categories | sort -du)
           echo $diff_files $cates
           repoman --version
