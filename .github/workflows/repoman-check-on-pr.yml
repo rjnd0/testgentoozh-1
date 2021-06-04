@@ -112,7 +112,7 @@ jobs:
             exit 1
           fi
       - name: Post a comment
-        if: failed()
+        if: ${{ failure() }}
         uses: peter-evans/create-or-update-comment@v1
         with:
           issue-number: ${{ github.event.number }}
