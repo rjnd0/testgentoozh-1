@@ -106,14 +106,12 @@ jobs:
           done
           cd /var/db/repos/gentoo || true
           v_repoman=$(repoman --version) || true
-          v_python=$(python -V) || true
           commit_gentoo=$(git rev-list -n1 HEAD) || true
           report="$(cat /tmp/report.txt)"
           report="${report//'%'/'%25'}"
           report="${report//$'\n'/'%0A'}"
           report="${report//$'\r'/'%0D'}"
           echo "::set-output name=report::${report:-<None>}"
-          echo "::set-output name=vpython::${v_python:-<None>}"
           echo "::set-output name=vrepoman::${v_repoman:-<None>}"
           echo "::set-output name=gentoocommit::${commit_gentoo:-<None>}"
           if [[ ${ret} == 0 ]]; then
@@ -134,9 +132,8 @@ jobs:
         with:
           issue-number: ${{ github.event.number }}
           body: |
-            ### :${{steps.check.outputs.stateicon}}: repoman checks ${{steps.check.outputs.state}}
+            ## :${{steps.check.outputs.stateicon}}: repoman checks ${{steps.check.outputs.state}}
 
-            _${{ steps.check.outputs.vpython }}_ 
             _${{ steps.check.outputs.vrepoman }}_ 
             _::gentoo_ repo version: [gentoo-mirror/gentoo](https://github.com/gentoo-mirror/gentoo/tree/${{ steps.check.outputs.gentoocommit }})
 
