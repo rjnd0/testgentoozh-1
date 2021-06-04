@@ -55,7 +55,7 @@ jobs:
       - name: Checkout the head ref of ::gentoo-zh
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.event.pull_request.head.sha }}
           path: gentoo-zh
       - name: Fetch ::gentoo repo
         uses: actions/checkout@v2
