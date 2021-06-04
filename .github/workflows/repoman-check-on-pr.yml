@@ -59,13 +59,11 @@ jobs:
         with:
           repository: gentoo-mirror/gentoo
           path: gentoo
-      - name: Enter ::gentoo-zh
-        run: |
-          sudo mv ${{ github.workspace }}/gentoo{,-zh} /var/db/repos/
-          cd /var/db/repos/gentoo-zh
       - name: Check
         run: |
           set -xe
+          sudo mv ${{ github.workspace }}/gentoo{,-zh} /var/db/repos/
+          cd /var/db/repos/gentoo-zh
           git diff --raw origin/master
           diff_files=$(git diff --raw origin/master | awk -F'[[:space:]]' '{printf $NF "\n"}')
           cates=$(cat /var/db/repos/gentoo{,-zh}/profiles/categories | sort -du)
