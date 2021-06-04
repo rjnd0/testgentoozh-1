@@ -15,6 +15,7 @@ jobs:
       - name: Prepare environment
         run: |
           set -xe
+          sudo mkdir -m 777 -p /etc/portage
           sudo mkdir -m 777 -p /var/db/repos/gentoo{,-zh}
           sudo mkdir -m 777 -p /var/tmp/portage
           ln -s /var/db/repos/gentoo{,-zh}
