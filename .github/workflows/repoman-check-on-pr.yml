@@ -107,15 +107,15 @@ jobs:
           cd /var/db/repos/gentoo
           v_repoman=$(repoman --version)
           v_python=$(python -V)
-          commit_gentoo=$(git rev-list -n1 master)
+          commit_gentoo=$(git rev-list -n1 origin/master)
           report="$(cat /tmp/report.txt)"
           report="${report//'%'/'%25'}"
           report="${report//$'\n'/'%0A'}"
           report="${report//$'\r'/'%0D'}"
-          echo "::set-output name=report::${report}"
-          echo "::set-output name=vpython::${v_python}"
-          echo "::set-output name=vrepoman::${v_repoman}"
-          echo "::set-output name=gentoocommit::${commit_gentoo}"
+          echo "::set-output name=report::${report:-<None>}"
+          echo "::set-output name=vpython::${v_python:-<None>}"
+          echo "::set-output name=vrepoman::${v_repoman:-<None>}"
+          echo "::set-output name=gentoocommit::${commit_gentoo:-<None>}"
           if [[ ${ret} == 0 ]]; then
             echo "::set-output name=state::passed"
             if ! $(grep -v 'No QA issues found' /tmp/report.txt); then
