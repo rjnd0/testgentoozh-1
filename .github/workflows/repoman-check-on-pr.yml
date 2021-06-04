@@ -70,9 +70,9 @@ jobs:
           set -xe
           curl -o ${COMMITS_JSON} ${COMMITS_URL}
           [[ $(file --mime-type ${COMMITS_JSON}) =~ application/json$ ]]
-          <${COMMITS_JSON} js '.message' && false
-          commits=( $(<${COMMITS_JSON} js '.[].sha' | cut -d'"' -f2) )
-          pcommits=( $(<${COMMITS_JSON} js '.[].parents[].sha' | cut -d'"' -f2) )
+          <${COMMITS_JSON} jq '.message' && false
+          commits=( $(<${COMMITS_JSON} jq '.[].sha' | cut -d'"' -f2) )
+          pcommits=( $(<${COMMITS_JSON} jq '.[].parents[].sha' | cut -d'"' -f2) )
           sha=${pcommits[0]}
           for pcommit in ${pcommits[@]}; do
             pcommit_not_matched=0
