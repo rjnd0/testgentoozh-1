@@ -25,7 +25,6 @@ djska
 djska
 djska
 djska
-djska
 ddjskadjskadjskadjskadjskadjskadjskadjskadjskadjskadjskadjskadjskadjskadjskjska
 djska
 djska
