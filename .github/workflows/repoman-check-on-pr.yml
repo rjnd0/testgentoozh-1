@@ -136,7 +136,7 @@ jobs:
             ## :${{steps.check.outputs.stateicon}}: repoman checks ${{steps.check.outputs.state}}
 
             _${{ steps.check.outputs.vrepoman }}_ 
-          _::gentoo_ repo latest commit: https://github.com/gentoo-mirror/gentoo/commit/${{ steps.check.outputs.gentoocommit }}
+            _::gentoo_ repo latest commit: https://github.com/gentoo-mirror/gentoo/commit/${{ steps.check.outputs.gentoocommit }}
 
             ```
             ${{ steps.check.outputs.report }}
