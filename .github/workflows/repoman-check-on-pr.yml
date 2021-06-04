@@ -10,6 +10,7 @@ on:
 
 jobs:
   check-changed-ebuilds:
+    name: check changed ebuilds
     runs-on: ubuntu-20.04
     steps:
       - name: Setup python3.9
@@ -103,11 +104,18 @@ jobs:
             popd
           done
           if [[ ${ret} != 0 ]]; then
-            echo "::set-output name=state::failed"
-            exit 0
+            report=$(cat /tmp/report.txt)
+            echo "::set-output name=report::$report"
+            exit 1
           fi
-      - name: Publish test result
-        if: ${{ steps.check.outputs.state == 'failed' }}
-        uses: EnricoMi/publish-unit-test-result-action@v1
+      - name: Post a comment
+        if: ${{ steps.check.outputs.report }}
+        uses: peter-evans/create-or-update-comment@v1
         with:
-          files: /tmp/report.txt
+          issue-number: ${{ github.event.number }}
+          body: |
+            **repoman checks failed**
+
+            ```
+            ${{ steps.check.outputs.report }}
+            ```
