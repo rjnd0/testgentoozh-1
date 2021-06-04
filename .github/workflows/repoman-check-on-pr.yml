@@ -107,7 +107,7 @@ jobs:
           cd /var/db/repos/gentoo
           v_repoman=$(repoman --version)
           v_python=$(python -V)
-          commit_gentoo=$(git rev-list -n1 origin/master)
+          commit_gentoo=$(git rev-list -n1 HEAD) || true
           report="$(cat /tmp/report.txt)"
           report="${report//'%'/'%25'}"
           report="${report//$'\n'/'%0A'}"
