@@ -11,7 +11,8 @@ SRC_URI="https://github.com/cockpit-project/cockpit/releases/download/${PV}/cock
 https://github.com/cockpit-project/cockpit/releases/download/${PV}/cockpit-cache-${PV}.tar.xz
 "
 
-LICENSE="GPL"
+LICENSE="GPL-2"
+
 SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE=""
@@ -29,26 +30,25 @@ acct-user/cockpit-ws
 RDEPEND="${DEPEND}"
 
 BDEPEND="${DEPEND}
-dev-util/gtk-doc 
+dev-util/gtk-doc
 dev-libs/gobject-introspection
 net-misc/networkmanager
 app-text/xmlto
 "
 # libgsystem npm pcp
 
-
 src_configure(){
-    econf \
-    --libexecdir=/usr/lib/${PN} \
-    --with-nfs-client-package='"nfs-utils"' \
-    --with-cockpit-user=cockpit-ws \
-    --with-cockpit-ws-instance-user=cockpit-ws \
-    --disable-pcp
-}
+	econf \
+		--libexecdir=/usr/lib/${PN} \
+		--with-nfs-client-package='"nfs-utils"' \
+		--with-cockpit-user=cockpit-ws \
+		--with-cockpit-ws-instance-user=cockpit-ws \
+		--disable-pcp
+	}
 
 src_install(){
-    emake DESTDIR="${D}" install
+	emake DESTDIR="${D}" install
 
-    insinto /etc/pam.d/
-    newins ${FILESDIR}/cockpit.pam cockpit
+	insinto /etc/pam.d/
+	newins "${FILESDIR}"/cockpit.pam cockpit
 }
