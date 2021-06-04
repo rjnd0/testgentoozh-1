@@ -12,6 +12,8 @@ jobs:
   check-changed-ebuilds:
     name: check changed ebuilds
     runs-on: ubuntu-20.04
+    permissions:
+      pull-requests: read
     steps:
       - name: Setup python3.9
         uses: actions/setup-python@v2
@@ -68,7 +70,9 @@ jobs:
           COMMITS_JSON: /tmp/commits.json
         run: |
           set -xe
-          curl -o ${COMMITS_JSON} ${COMMITS_URL}
+          curl -H "Accept: application/vnd.github.v3+json" \
+               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+               -o ${COMMITS_JSON} ${COMMITS_URL}
           [[ $(file --mime-type ${COMMITS_JSON}) =~ application/json$ ]]
           <${COMMITS_JSON} jq '.message' && false
           commits=( $(<${COMMITS_JSON} jq '.[].sha' | cut -d'"' -f2) )
