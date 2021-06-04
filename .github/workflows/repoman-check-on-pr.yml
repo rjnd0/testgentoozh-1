@@ -15,25 +15,26 @@ jobs:
       - name: Prepare environment
         run: |
           set -xe
-          sudo mkdir -p /var/db/repos/gentoo{,-zh}
-          sudo mkdir -p /var/tmp/portage
+          sudo mkdir -m 777 -p /var/db/repos/gentoo{,-zh}
+          sudo mkdir -m 777 -p /var/tmp/portage
+          ln -s /var/db/repos/gentoo{,-zh}
       - name: Checkout the base ref
         uses: actions/checkout@v2
         with:
           ref: ${{ github.base_ref }}
-          path: /var/db/repos/gentoo-zh
+          path: gentoo-zh
       - name: Checkout the head ref
         uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
-          path: /var/db/repos/gentoo-zh
+          path: gentoo-zh
       - name: Install dependencies
         run: sudo apt-get install -y --no-install-recommends libxslt-dev libxml2-dev libxml2-utils zstd python3-lxml
       - name: Fetch ::gentoo repo
         uses: actions/checkout@v2
         with:
           repository: gentoo-mirror/gentoo
-          path: /var/db/repos/gentoo
+          path: gentoo
       - name: Fetch portage
         uses: actions/checkout@v2
         with:
