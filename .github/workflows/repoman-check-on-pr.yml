@@ -22,19 +22,19 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.base_ref }}
-          path: /var/db/repos/gentoo-zh
+          path: gentoo-zh
       - name: Checkout the head ref
         uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
-          path: /var/db/repos/gentoo-zh
+          path: gentoo-zh
       - name: Install dependencies
         run: sudo apt-get install -y --no-install-recommends libxslt-dev libxml2-dev libxml2-utils zstd python3-lxml
       - name: Fetch ::gentoo repo
         uses: actions/checkout@v2
         with:
           repository: gentoo-mirror/gentoo
-          path: /var/db/repos/gentoo
+          path: gentoo
       - name: Fetch portage
         uses: actions/checkout@v2
         with:
@@ -54,5 +54,6 @@ jobs:
           sudo ./setup.py install --prefix=/usr
       - name: Test
         run: |
+          mv ${{ GITHUB_WORKSPACE }}/* /var/db/repos/
           cd /var/db/repos/gentoo-zh/app-office/wps-office
           repoman scan
