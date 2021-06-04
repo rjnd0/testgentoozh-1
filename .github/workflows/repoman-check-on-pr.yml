@@ -90,9 +90,9 @@ jobs:
           ret=0
           for pkg in ${check_pkgs[@]}; do
             echo
-            echo "    ================================="
-            echo "    >>> Checking ${pkg} ..."
-            echo "    ================================="
+            echo "================================="
+            echo ">>> Checking ${pkg} ..."
+            echo "================================="
             pushd ${pkg}
             repoman full || ret=1
             popd
