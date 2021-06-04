@@ -116,7 +116,7 @@ jobs:
           echo "::set-output name=gentoocommit::${commit_gentoo:-<None>}"
           if [[ ${ret} == 0 ]]; then
             echo "::set-output name=state::passed"
-            if ! $(grep -v 'No QA issues found' /tmp/report.txt); then
+            if ! grep -v 'No QA issues found' /tmp/report.txt &>/dev/null; then
               echo "::set-output name=stateicon::heavy_check_mark"
             else
               echo "::set-output name=stateicon::white_circle"
