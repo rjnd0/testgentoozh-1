@@ -50,11 +50,13 @@ jobs:
       - name: Checkout the base ref of ::gentoo-zh
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           ref: ${{ github.event.pull_request.base.sha }}
           path: gentoo-zh
       - name: Checkout the head ref of the pull request
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.sha }}
           path: gentoo-zh
@@ -64,6 +66,7 @@ jobs:
           repository: gentoo-mirror/gentoo
           path: gentoo
       - name: Check
+        id: check
         shell: bash
         env:
           THEBASEREF: ${{ github.event.pull_request.base.sha }}
@@ -87,6 +90,8 @@ jobs:
             done
           done
           check_pkgs=( $(echo "${check_pkgs[@]}" | tr ' ' '\n' | sort -du | tr '\n' ' ') )
+          repoman --version >/tmp/report.txt
+          echo >/tmp/report.txt
           ret=0
           for pkg in ${check_pkgs[@]}; do
             echo
@@ -94,7 +99,15 @@ jobs:
             echo ">>> Checking ${pkg} ..."
             echo "================================="
             pushd ${pkg}
-            repoman full || ret=1
+            repoman full -q > >(tee -i /tmp/report.txt) || ret=1
             popd
           done
-          [[ ${ret} == 0 ]]
+          if [[ ${ret} != 0 ]]; then
+            echo "::set-output name=state::failed"
+            exit 0
+          fi
+      - name: Publish test result
+        if: ${{ steps.check.outputs.state == 'failed' }}
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        with:
+          files: /tmp/report.txt
