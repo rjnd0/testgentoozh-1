@@ -100,25 +100,36 @@ jobs:
             echo ">>> Checking ${pkg} ..."
             echo "================================="
             pushd ${pkg}
-            repoman full -q > >(tee -i /tmp/report.txt) || ret=1
+            echo "Package: ${pkg}" >>/tmp/report.txt
+            repoman full -q > >(tee -ai /tmp/report.txt) || ret=1
+            echo >>/tmp/report.txt
             popd
           done
-          if [[ ${ret} != 0 ]]; then
-            report="$(cat /tmp/report.txt)"
-            report="${report//'%'/'%25'}"
-            report="${report//$'\n'/'%0A'}"
-            report="${report//$'\r'/'%0D'}"
-            echo "::set-output name=report::${report}"
+          report="$(cat /tmp/report.txt)"
+          report="${report//'%'/'%25'}"
+          report="${report//$'\n'/'%0A'}"
+          report="${report//$'\r'/'%0D'}"
+          echo "::set-output name=report::${report}"
+          if [[ ${ret} == 0 ]]; then
+            echo "::set-output name=state::passed"
+            if ! $(grep -v 'No QA issues found' /tmp/report.txt); then
+              echo "::set-output name=stateicon::heavy_check_mark"
+            esle
+              echo "::set-output name=stateicon::white_circle"
+            fi
+          else
+            echo "::set-output name=state::failed"
+            echo "::set-output name=stateicon::x"
             exit 1
           fi
-      - name: Post a comment
-        if: ${{ failure() }}
+      - name: Post result
+        if: ${{ always() }}
         uses: peter-evans/create-or-update-comment@v1
         with:
           issue-number: ${{ github.event.number }}
           body: |
 
-            :x: **repoman checks failed**
+            :${{steps.check.outputs.stateicon}}: **repoman checks ${{steps.check.outputs.state}}**
 
             ```
             ${{ steps.check.outputs.report }}
