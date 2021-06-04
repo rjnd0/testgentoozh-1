@@ -162,4 +162,4 @@ jobs:
             ```
             ${{ steps.check.outputs.report }}
             ```
-            [details](https://github.com/EnricoMi/publish-unit-test-result-action/runs/${{ github.run_id }})
+            [details](https://github.com/bekcpear/testgentoozh/pulls/${{ github.event.number }}/checks?check_run_id=${{ github.job_id }})
