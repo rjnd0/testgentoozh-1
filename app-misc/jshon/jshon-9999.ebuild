@@ -10,9 +10,9 @@ SRC_URI=""
 
 EGIT_REPO_URI="https://github.com/keenerd/jshon.git"
 
-LICENSE="MIT"
+LICENSE="GLP"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE=""
 
 DEPEND=""
