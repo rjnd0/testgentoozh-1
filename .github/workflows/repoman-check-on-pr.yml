@@ -18,23 +18,8 @@ jobs:
           sudo mkdir -m 777 -p /etc/portage
           sudo mkdir -m 777 -p /var/db/repos/gentoo{,-zh}
           sudo mkdir -m 777 -p /var/tmp/portage
-      - name: Checkout the base ref
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.base_ref }}
-          path: gentoo-zh
-      - name: Checkout the head ref
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.head_ref }}
-          path: gentoo-zh
       - name: Install dependencies
         run: sudo apt-get install -y --no-install-recommends libxslt-dev libxml2-dev libxml2-utils zstd python3-lxml
-      - name: Fetch ::gentoo repo
-        uses: actions/checkout@v2
-        with:
-          repository: gentoo-mirror/gentoo
-          path: gentoo
       - name: Fetch portage
         uses: actions/checkout@v2
         with:
@@ -52,8 +37,23 @@ jobs:
           set -xe
           cd repoman
           sudo ./setup.py install --prefix=/usr
+      - name: Checkout the base ref of ::gentoo-zh
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.base_ref }}
+          path: gentoo-zh
+      - name: Checkout the head ref of ::gentoo-zh
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+          path: gentoo-zh
+      - name: Fetch ::gentoo repo
+        uses: actions/checkout@v2
+        with:
+          repository: gentoo-mirror/gentoo
+          path: gentoo
       - name: Test
         run: |
-          mv ${{ github.workspace }}/* /var/db/repos/
+          sudo mv ${{ github.workspace }}/gentoo{,-zh} /var/db/repos/
           cd /var/db/repos/gentoo-zh/app-office/wps-office
           repoman scan
