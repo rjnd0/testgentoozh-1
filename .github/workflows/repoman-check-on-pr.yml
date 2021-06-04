@@ -105,8 +105,8 @@ jobs:
             popd
           done
           if [[ ${ret} != 0 ]]; then
-            report=$(cat /tmp/report.txt)
-            echo "::set-output name=report::$report"
+            report="$(cat /tmp/report.txt)"
+            echo ::set-output name=report::"${report}"
             exit 1
           fi
       - name: Post a comment
@@ -115,8 +115,10 @@ jobs:
         with:
           issue-number: ${{ github.event.number }}
           body: |
-            **repoman checks failed**
+
+            :x: **repoman checks failed**
 
             ```
             ${{ steps.check.outputs.report }}
             ```
+        run: false
