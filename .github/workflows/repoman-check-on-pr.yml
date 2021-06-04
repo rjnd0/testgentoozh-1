@@ -1,4 +1,4 @@
-name: Use repoman to check changed pkgs
+name: Repoman
 on:
   pull_request:
     branches:
@@ -9,7 +9,7 @@ on:
     types: [opened, edited, reopened, synchronize]
 
 jobs:
-  check:
+  check-changed-ebuilds:
     runs-on: ubuntu-20.04
     steps:
       - name: Setup python3.9
@@ -55,7 +55,7 @@ jobs:
       - name: Checkout the head ref of ::gentoo-zh
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.event.pull_request.head.sha }}
           path: gentoo-zh
       - name: Fetch ::gentoo repo
         uses: actions/checkout@v2
