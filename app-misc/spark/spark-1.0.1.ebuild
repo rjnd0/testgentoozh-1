@@ -3,7 +3,7 @@
 
 EAPI=7
 
-DESCRIPTION="sdjkalaaaadaddjkaljadkl"
+DESCRIPTION="sdjkalaaaadaddjkaljl"
 HOMEPAGE="http://zachholman.com/spark/"
 SRC_URI="https://github.com/holman/spark/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
