@@ -1,4 +1,4 @@
-name: Use repoman to check changed ebuilds
+name: Use repoman to check changed pkgs
 on:
   pull_request:
     branches:
@@ -85,6 +85,9 @@ jobs:
           done
           ret=0
           for pkg in ${check_pkgs[@]}; do
+            echo "=============================="
+            echo "=== Checking ${pkg} ..."
+            echo "=============================="
             pushd ${pkg}
             repoman full || ret=1
             popd
